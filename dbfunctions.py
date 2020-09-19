@@ -1,5 +1,5 @@
-from flask_lists.app import Lists
-from flask_lists.app import Items
+from list_manager.app import Lists
+from list_manager.app import Items
 
 
 def get_items_from_list(list_name):

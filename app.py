@@ -1,5 +1,5 @@
 import importlib
-from flask_lists import dbfunctions as dbfunc
+from list_manager import dbfunctions as dbfunc
 
 from flask import Flask, render_template
 from flask_sqlalchemy import SQLAlchemy
