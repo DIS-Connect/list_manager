@@ -1,0 +1,94 @@
+
+
+
+
+<div id="selcted_items" style="width: 50%">
+
+</div>
+<div id="unused_items" style="width: 50%; margin-left: 50%; position: absolute; top: 0 ">
+
+</div>
+
+<input id="new_item">
+<button  onclick="add_to_selected()">
+    hinzufügen
+</button >
+<button>
+    Speichern
+</button>
+<a href="/{{list_name}}">
+    Zurück
+</a>
+
+<script>
+ var items = {{items|tojson}};
+
+ var all_items = {{all_items|tojson}};
+
+  var unused_items = {{unused_items|tojson}};
+
+  function draw() {
+      console.log(items)
+      console.log(unused_items)
+      console.log(all_items)
+      document.getElementById("selcted_items").innerHTML ="";
+      items.forEach(item =>
+          document.getElementById("selcted_items").innerHTML += "<p onclick='change_to_unused(" + item["id"] + ")'>" + item["name"] + "</p>"
+      );
+
+      document.getElementById("unused_items").innerHTML = "";
+
+      unused_items.forEach(item =>
+          document.getElementById("unused_items").innerHTML += "<p onclick='change_to_selected(" + item["id"] + ")'>" + item["name"] + "</p>"
+      );
+
+  }
+
+function change_to_selected(id){
+    unused_items.forEach(item =>{
+        console.log("in for      " +item["id"]);
+        if(id == item["id"]){
+
+            items.push({"id":item["id"], "name":item["name"]});
+
+            var index = unused_items.indexOf(item)
+            if (index > -1) { unused_items.splice(index, 1) }
+        }
+});
+
+
+draw()
+}
+
+function change_to_unused(id){
+       items.forEach(item =>{
+        console.log("in for      " +item["id"]);
+        if(id == item["id"]){
+
+            unused_items.push({"id":item["id"], "name":item["name"]});
+
+            var index = items.indexOf(item)
+            if (index > -1) { items.splice(index, 1) }
+        }
+});
+       draw()
+
+}
+
+function add_to_selected(){
+    var new_id = "0" + (all_items.length + 1);
+    var new_name = document.getElementById("new_item").value;
+    items.push({"id":new_id,"name":new_name })
+    all_items.push({"id":new_id,"name":new_name })
+    document.getElementById("new_item").value = "";
+    draw()
+
+}
+
+
+
+draw()
+
+
+
+</script>
